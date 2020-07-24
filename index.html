@@ -16,7 +16,7 @@
       <div class="container">
          <div class="cart">
             <div class="col-md-12 col-lg-10 mx-auto">
-               <div class="cart-item">
+               <div class="cart-item" id="item1">
                   <div class="row">
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
@@ -30,12 +30,12 @@
                            <button id= "plus-btn" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5>$ <span id="Price-amount">1219</span></h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <img src="images/remove.png" alt="" id="cross1" class="remove-item">
                      </div>
                   </div>
                </div>
 
-               <div class="cart-item">
+               <div class="cart-item" id="item2">
                   <div class="row">
                      <div class="col-md-7 center-item mx-auto">
                         <img src="images/product-2.png" alt="">
@@ -43,13 +43,13 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button id= "minus-btn1" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id= "quantity-value1" type="text" class="form-control text-center" value="1">
-                           <button id= "plus-btn1" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id= "minus-btn2" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id= "quantity-value2" type="number" class="form-control text-center" value="1">
+                           <button id= "plus-btn2" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <h5>$ <span id="Price-amount2">59</span></h5>
+                        <img src="images/remove.png" alt="" id="cross2" class="remove-item">
                      </div>
                   </div>
                </div>
@@ -81,6 +81,7 @@
 
    <script>
 
+      // initializaed all variables 
       var plusBtn = document.getElementById("plus-btn");
       var minusBtn = document.getElementById("minus-btn");
       var quantityValue = document.getElementById("quantity-value").value;
@@ -88,45 +89,73 @@
       var priceNumber = parseFloat(priceAmount);
       var subTotal = document.getElementById("sub-total").innerHTML;
       var subTotalNumber = parseFloat(subTotal);
-      // console.log(priceAmount);
+      var newprice2 = 0;
+      var newprice = 0;
 
-
+      // ============================first items======================================= 
       // increassing btn value 
       plusBtn.addEventListener("click", function(){
             document.getElementById("quantity-value").value = quantityValue++ ;
             var newprice = priceNumber*(quantityValue-1);
             document.getElementById("Price-amount").innerHTML = newprice;
-            // console.log(newprice)
+             totalPrice(newprice, newprice2);
+         })
 
-            // document.getElementById("Price-amount").innerHTML = priceAmount*quantityValue ;
-            // priceAmount = priceAmount*quantityValue;
-            // console.log(priceAmount);
-            totalPrice(newprice);
-         
-      })
+
+         // increassing price 
       minusBtn.addEventListener("click", function(){
          if(quantityValue >0){
             document.getElementById("quantity-value").value = --quantityValue ;
-            var newprice = priceNumber*(quantityValue-1);
+            var newprice = priceNumber*(quantityValue);
             document.getElementById("Price-amount").innerHTML = newprice;
-         //    document.getElementById("Price-amount").innerHTML = priceAmount ;
-         //    priceAmount = priceAmount/quantityValue;
+            totalPrice(newprice,newprice2)
+            return newprice;
          }  
-         
          else{
-            
             document.getElementById("quantity-value").value = 0 ;
          }
       })
-      // increassing price 
+
+      // ================================second items====================================================
+      var plusBtn2 = document.getElementById("plus-btn2");
+      var minusBtn2 = document.getElementById("minus-btn2");
+      var quantityValue2 = document.getElementById("quantity-value2").value;
+      var priceAmount2 = document.getElementById("Price-amount2").innerHTML;
+      var priceNumber2 = parseFloat(priceAmount2);
 
 
-      // total info 
-      function totalPrice(newprice){
+      plusBtn2.addEventListener("click", function(){
+         document.getElementById("quantity-value2").value = quantityValue2++;
+         
+         newprice2 = priceNumber2*(quantityValue2-1);
 
-         document.getElementById("sub-total").innerHTML = subTotalNumber + newprice;
+         document.getElementById("Price-amount2").innerHTML = newprice2;
+         totalPrice(newprice, newprice2);
+       })
+      minusBtn2.addEventListener("click", function(){
+         if(quantityValue2 >0){
+            document.getElementById("quantity-value2").value = --quantityValue2 ;
+            newprice2 = priceNumber2*(quantityValue2);
+            document.getElementById("Price-amount2").innerHTML = newprice2;
+            totalPrice(newprice,newprice2); 
+            // return newprice2;
+         }  
+         else{
+            document.getElementById("quantity-value2").value = 0 ;
+         }
+       })
 
+
+
+
+
+      // total info function
+      function totalPrice(newprice, newprice2){
+         document.getElementById("sub-total").innerHTML =  (subTotalNumber + (newprice-1)) + (subTotalNumber + (newprice2-1)) ;
+         // document.getElementById("sub-total").innerHTML = (subTotalNumber + (newprice-1))   
       }
+
+
 
 
 
